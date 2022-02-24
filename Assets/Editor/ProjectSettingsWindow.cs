@@ -94,12 +94,6 @@ namespace UnrealEditor
             {
                 Scene newScene = EditorSceneManager.OpenScene(_initializationScenePath, OpenSceneMode.Additive);
 
-                GameObject[] gameObjects = newScene.GetRootGameObjects();
-                foreach (GameObject gameObject in gameObjects)
-                {
-                    DestroyImmediate(gameObject);
-                }
-
                 CreateEngineObject(newScene);
 
                 _ = EditorSceneManager.SaveScene(newScene, _initializationScenePath, false);
@@ -138,8 +132,15 @@ namespace UnrealEditor
 
             void CreateEngineObject(Scene newScene)
             {
+                bool foundInitScript = false;
+                __InitializationScript initScript;
+                foreach (GameObject gameObject in newScene.GetRootGameObjects())
+                {
+                    if (foundInitScript = gameObject.TryGetComponent(out initScript)) return;
+                }
+
                 GameObject engineObject = new GameObject("UnrealEngine");
-                UEngine.__InitializationScript script = engineObject.AddComponent<UEngine.__InitializationScript>();
+                __InitializationScript script = engineObject.AddComponent<__InitializationScript>();
                 script.settingsScriptableObject = _projectSettings;
 
                 SceneManager.MoveGameObjectToScene(engineObject, newScene);

@@ -7,8 +7,7 @@ namespace UnrealEngine.Engine
 {
     public class UEngine : UObject
     {
-        protected internal static UEngine _engine = default;
-        public static UEngine GEngine => _engine;
+        public static UEngine GEngine { get; internal set; }
 
         static UEngine()
         {
@@ -30,19 +29,19 @@ namespace UnrealEngine.Engine
         {
 
         }
+    }
 
-        public class __InitializationScript : MonoBehaviour
+    public class __InitializationScript : MonoBehaviour
+    {
+        [SerializeField] public ProjectSettingsScriptableObject settingsScriptableObject = default;
+
+        private void Awake()
         {
-            [SerializeField] public ProjectSettingsScriptableObject settingsScriptableObject = default;
+            DontDestroyOnLoad(gameObject);
 
-            private void Awake()
-            {
-                DontDestroyOnLoad(gameObject);
+            UEngine.GEngine = UObject.NewObject<UGameEngine>();
 
-                _engine = NewObject<UGameEngine>();
-
-                GEngine.Init();
-            }
+            UEngine.GEngine.Init();
         }
     }
 }
