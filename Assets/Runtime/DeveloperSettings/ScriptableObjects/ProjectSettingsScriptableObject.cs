@@ -28,8 +28,6 @@ namespace UnrealEngine.DeveloperSettings
 
                 UClass key = container.settings.GetClass();
                 developerSettings.Add(key, container.settings);
-
-                UObject.defaultObjects.Add(key, container.settings);
             }
         }
     }

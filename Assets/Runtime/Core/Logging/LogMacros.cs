@@ -98,7 +98,7 @@ namespace UnrealEngine.Core
 
         public static readonly FLogCategory LogCore = new FLogCategory(nameof(LogCore));
 
-        protected FLogCategory(string name) { }
+        protected FLogCategory(string name) => _name = name;
 
         public override string ToString()
         {

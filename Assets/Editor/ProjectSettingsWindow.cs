@@ -54,6 +54,10 @@ namespace UnrealEditor
         {
             void PrivateOnEnable()
             {
+                EditorApplication.update -= PrivateOnEnable;
+
+                if (Application.isPlaying) return;
+
                 SelectSettings(null);
 
                 InitializeConfigurations();
@@ -65,9 +69,9 @@ namespace UnrealEditor
                 if (_selectedSettingsEditor) return;
 
                 SelectSettings(_projectSettings.containers);
-
-                EditorApplication.update -= PrivateOnEnable;
             }
+
+            if (Application.isPlaying) return;
 
             EditorApplication.update += PrivateOnEnable;
 

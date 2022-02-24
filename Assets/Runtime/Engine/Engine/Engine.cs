@@ -2,18 +2,16 @@
 using UnityEngine.SceneManagement;
 using UnrealEngine.CoreUObject;
 using UnrealEngine.DeveloperSettings;
-using UnrealEngine.Settings;
 
 namespace UnrealEngine.Engine
 {
     public class UEngine : UObject
     {
-        public static readonly UEngine GEngine = default;
+        protected internal static UEngine _engine = default;
+        public static UEngine GEngine => _engine;
 
         static UEngine()
         {
-            GEngine = NewObject<UEngine>();
-
             SceneManager.sceneLoaded += SceneLoaded;
             SceneManager.sceneUnloaded += SceneUnloaded;
         }
@@ -40,6 +38,8 @@ namespace UnrealEngine.Engine
             private void Awake()
             {
                 DontDestroyOnLoad(gameObject);
+
+                _engine = NewObject<UGameEngine>();
 
                 GEngine.Init();
             }

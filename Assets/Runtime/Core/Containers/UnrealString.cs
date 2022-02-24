@@ -15,5 +15,10 @@ namespace UnrealEngine.Core
         {
             return string.Format(format, args);
         }
+
+        public override string ToString()
+        {
+            return _string;
+        }
     }
 }
