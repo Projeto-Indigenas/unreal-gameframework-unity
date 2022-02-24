@@ -20,20 +20,4 @@ MonoBehaviour:
     00000000:
       type: {class: ULevelModeSettings, ns: UnrealEngine.DeveloperSettings, asm: UnrealEngine}
       data:
-        _levelModeSettings:
-        - levelSettings:
-            levelName: 
-            level: {fileID: 0}
-          gameModeSettings:
-            gameModeOverride:
-              _typeNameSerialized: UnrealEngine.Engine.AGameMode, UnrealEngine, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            defaultPawnClass:
-              _typeNameSerialized: UnrealEngine.Engine.APawn, UnrealEngine, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            hudClass:
-              _typeNameSerialized: UnrealEngine.Engine.AHUD, UnrealEngine, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            playerControllerClass:
-              _typeNameSerialized: UnrealEngine.Engine.APlayerController, UnrealEngine,
-                Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        _levelModeSettings: []

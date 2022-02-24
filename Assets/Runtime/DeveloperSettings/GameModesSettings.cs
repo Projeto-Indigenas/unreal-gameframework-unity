@@ -12,10 +12,10 @@ namespace UnrealEngine.Settings
     public class UGameMapsSettings : UDeveloperSettings
     {
         [Header("Default Modes"), NoHeader]
-        [SerializeField] private GameModeSettings _defaultSettings;
+        [SerializeField] private GameModeSettings _defaultSettings = default;
 
         [Header("Default Maps"), NoHeader]
-        [SerializeField] private LevelSettings _levelSettings;
+        [SerializeField] private LevelSettings _levelSettings = default;
 
         [Header("Game Instance")]
         [SerializeField, TSubclassOf(typeof(UGameInstance), true)]

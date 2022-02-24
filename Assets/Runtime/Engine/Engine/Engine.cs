@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
-using UnrealEngine.DeveloperSettings;
 using UnrealEngine.Settings;
 
 namespace UnrealEngine.Engine
@@ -52,23 +51,19 @@ namespace UnrealEngine.Engine
 
         private bool LoadMap(FString url, out FString error)
         {
-            error = null;
             LoadSceneParameters parameters = new LoadSceneParameters
             {
                 loadSceneMode = LoadSceneMode.Additive,
                 localPhysicsMode = LocalPhysicsMode.Physics3D
             };
             
-            Scene scene = SceneManager.LoadScene(url, parameters);
-            
-            if (!scene.IsValid())
-            {
-                error = $"Failed to load world with url: {url}";
-                return false;
-            }
-                        
-            SceneManager.SetActiveScene(scene);
+            AsyncOperation operation = SceneManager.LoadSceneAsync(url, parameters);
 
+            operation.allowSceneActivation = true;
+
+            // unity already manager errors when loading maps e just stops the code flow
+            // shit...
+            error = null;
             return true;
         }
 
@@ -91,25 +86,6 @@ namespace UnrealEngine.Engine
         private static void SceneUnloaded(Scene scene)
         {
 
-        }
-    }
-
-    public class __InitializationScript : MonoBehaviour
-    {
-        public ProjectSettingsScriptableObject settingsScriptableObject = default;
-
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-
-            UEngine.GEngine = UObject.NewObject<UGameEngine>();
-
-            UEngine.GEngine.Init();
-        }
-
-        private void Start()
-        {
-            UEngine.GEngine.Start();
         }
     }
 }

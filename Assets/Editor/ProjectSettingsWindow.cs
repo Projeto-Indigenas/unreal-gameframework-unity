@@ -133,14 +133,14 @@ namespace UnrealEditor
             void CreateEngineObject(Scene newScene)
             {
                 bool foundInitScript = false;
-                __InitializationScript initScript;
+                __EngineInitialization initScript;
                 foreach (GameObject gameObject in newScene.GetRootGameObjects())
                 {
                     if (foundInitScript = gameObject.TryGetComponent(out initScript)) return;
                 }
 
                 GameObject engineObject = new GameObject("UnrealEngine");
-                __InitializationScript script = engineObject.AddComponent<__InitializationScript>();
+                __EngineInitialization script = engineObject.AddComponent<__EngineInitialization>();
                 script.settingsScriptableObject = _projectSettings;
 
                 SceneManager.MoveGameObjectToScene(engineObject, newScene);
