@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using UnityEngine;
+﻿using UnityEngine;
 using UnrealEngine.CoreUObject;
 using UnrealEngine.Utilities;
 
@@ -26,7 +25,7 @@ namespace UnrealEngine.DeveloperSettings
         {
             if (_settings == null) return;
 
-            UObject.defaultObjects.Add(_settings.GetClass(), _settings);
+            UObject.defaultObjects[_settings.GetClass()] = _settings;
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()

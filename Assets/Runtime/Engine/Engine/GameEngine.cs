@@ -1,4 +1,6 @@
-﻿using UnrealEngine.CoreUObject;
+﻿using UnityEngine;
+using UnrealEngine.Core;
+using UnrealEngine.CoreUObject;
 using UnrealEngine.Settings;
 
 namespace UnrealEngine.Engine
@@ -16,10 +18,17 @@ namespace UnrealEngine.Engine
         {
             base.Init();
 
-            UGameModesSettings settings = GetDefault<UGameModesSettings>();
+            UGameMapsSettings settings = GetDefault<UGameMapsSettings>();
             UClass gameInstanceClass = settings.gameInstanceClass;
             _gameInstance = gameInstanceClass.NewObject<UGameInstance>(this);
             _gameInstance.Init();
+        }
+
+        public override void Start()
+        {
+            UELog.Log(FLogCategory.LogInit, ELogVerbosity.Display, "Starting Game.");
+
+            _gameInstance.StartGameInstance();
         }
     }
 }

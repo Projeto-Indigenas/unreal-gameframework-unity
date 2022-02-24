@@ -97,6 +97,9 @@ namespace UnrealEngine.Core
         private string _name = default;
 
         public static readonly FLogCategory LogCore = new FLogCategory(nameof(LogCore));
+        public static readonly FLogCategory LogEngine = new FLogCategory(nameof(LogEngine));
+        public static readonly FLogCategory LogLoad = new FLogCategory(nameof(LogLoad));
+        public static readonly FLogCategory LogInit = new FLogCategory(nameof(LogInit));
 
         protected FLogCategory(string name) => _name = name;
 

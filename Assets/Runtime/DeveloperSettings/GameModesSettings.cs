@@ -1,20 +1,32 @@
 ﻿using System;
 using UnityEngine;
+using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
 using UnrealEngine.DeveloperSettings;
 using UnrealEngine.Engine;
+using UnrealEngine.Utilities;
 
 namespace UnrealEngine.Settings
 {
     [Serializable]
-    public class UGameModesSettings : UDeveloperSettings
+    public class UGameMapsSettings : UDeveloperSettings
     {
-        [SerializeField, TSubclassOf(typeof(AGameModeBase), false)]
-        public UClass defaultGameModeClass = StaticClass<AGameMode>();
+        [Header("Default Modes"), NoHeader]
+        [SerializeField] private GameModeSettings _defaultSettings;
+
+        [Header("Default Maps"), NoHeader]
+        [SerializeField] private LevelSettings _levelSettings;
+
+        [Header("Game Instance")]
         [SerializeField, TSubclassOf(typeof(UGameInstance), true)]
         public UClass gameInstanceClass = StaticClass<UGameInstance>();
 
-        public override string categoryName => "Project";
-        public override string sectionName => "Modes";
+        public override FString categoryName => "Project";
+        public override FString sectionName => "Maps & Modes";
+
+        public FString GetDefaultMap()
+        {
+            return _levelSettings.levelName;
+        }
     }
 }

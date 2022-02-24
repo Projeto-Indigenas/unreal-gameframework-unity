@@ -1,5 +1,7 @@
-﻿using UnityEditor;
+﻿using System.Reflection;
+using UnityEditor;
 using UnityEngine;
+using UnrealEditor.Extensions;
 using UnrealEngine.Utilities;
 
 namespace UnrealEditor.Utilities
@@ -9,7 +11,19 @@ namespace UnrealEditor.Utilities
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUI.GetPropertyHeight(property, label, true);
+            float height = 0F;
+            SerializedProperty iterator = property.Copy();
+            SerializedProperty endProperty = property.Copy();
+            endProperty.NextVisible(false);
+            iterator.NextVisible(true);
+            do
+            {
+                HeaderAttribute header = iterator.GetFieldInfo(out _).GetCustomAttribute<HeaderAttribute>();
+                if (header != null) height += 20F;
+                height += EditorGUI.GetPropertyHeight(iterator, label, true);
+            }
+            while (iterator.NextVisible(false) && !SerializedProperty.EqualContents(iterator, endProperty));
+            return height;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

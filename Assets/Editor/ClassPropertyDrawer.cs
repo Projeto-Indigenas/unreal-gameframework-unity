@@ -9,7 +9,7 @@ using UnrealEditor.Extensions;
 namespace UnrealEditor
 {
     [CustomPropertyDrawer(typeof(UClass))]
-    public class UClassPropertyDrawer : PropertyDrawer
+    public class ClassPropertyDrawer : PropertyDrawer
     {
         private TArray<Type> _allTypes = default;
         private string[] _allNames = default;

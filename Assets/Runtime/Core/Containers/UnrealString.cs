@@ -8,6 +8,8 @@ namespace UnrealEngine.Core
 
         public FString(string value) => _string = value;
 
+        public bool IsEmpty() => string.IsNullOrEmpty(_string);
+
         public static implicit operator FString(string value) => new FString(value);
         public static implicit operator string(FString value) => value._string;
 

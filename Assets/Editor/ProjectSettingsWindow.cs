@@ -27,7 +27,7 @@ namespace UnrealEditor
         private Vector2 _categoriesPosition = default;
         private Vector2 _settingsPosition = default;
 
-        private Editor _selectedSettingsEditor = default;
+        private Editor[] _selectedSettingsEditors = default;
 
         static UProjectSettingsWindow()
         {
@@ -66,7 +66,7 @@ namespace UnrealEditor
 
                 EnsureScriptableObjectHasAllTypes();
 
-                if (_selectedSettingsEditor) return;
+                if (_selectedSettingsEditors != null) return;
 
                 SelectSettings(_projectSettings.containers);
             }
@@ -185,14 +185,15 @@ namespace UnrealEditor
                 _settingsPosition = EditorGUILayout.BeginScrollView(_settingsPosition,
                     EditorStyles.helpBox, GUILayout.ExpandHeight(true));
                 {
-                    if (_selectedSettingsEditor)
+                    if (_selectedSettingsEditors != null)
                     {
-                        EditorGUILayout.BeginVertical();
+                        for (int index = 0; index < _selectedSettingsEditors.Length; index++)
                         {
-                            _selectedSettingsEditor.DrawHeader();
-                            _selectedSettingsEditor.OnInspectorGUI();
+                            Editor editor = _selectedSettingsEditors[index];
+                            editor.DrawHeader();
+                            editor.OnInspectorGUI();
+                            EditorGUILayout.Space(50F);
                         }
-                        EditorGUILayout.EndVertical();
                     }
                 }
                 EditorGUILayout.EndScrollView();
@@ -228,9 +229,16 @@ namespace UnrealEditor
 
         private void SelectSettings(DeveloperSettingsContainerScriptableObject[] settings)
         {
-            if (_selectedSettingsEditor) DestroyImmediate(_selectedSettingsEditor);
+            if (_selectedSettingsEditors != null)
+            {
+                for (int index = 0; index < _selectedSettingsEditors.Length; index++)
+                {
+                    DestroyImmediate(_selectedSettingsEditors[index]);
+                }
+                _selectedSettingsEditors = null;
+            }
             if (settings == null || settings.Length == 0) return;
-            _selectedSettingsEditor = Editor.CreateEditor(settings);
+            _selectedSettingsEditors = Array.ConvertAll(settings, each => Editor.CreateEditor(each));
         }
 
         private void EnsureScriptableObjectHasAllTypes()

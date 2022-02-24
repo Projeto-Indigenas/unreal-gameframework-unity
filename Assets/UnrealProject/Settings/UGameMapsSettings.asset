@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac13343098312f64f9be6b0563e4b692, type: 3}
+  m_Name: UGameMapsSettings
+  m_EditorClassIdentifier: 
+  _typeName: UGameMapsSettings
+  _settings:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: UGameMapsSettings, ns: UnrealEngine.Settings, asm: UnrealEngine}
+      data:
+        _defaultSettings:
+          gameModeOverride:
+            _typeNameSerialized: UnrealEngine.Engine.AGameMode, UnrealEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          defaultPawnClass:
+            _typeNameSerialized: UnrealEngine.Engine.APawn, UnrealEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          hudClass:
+            _typeNameSerialized: UnrealEngine.Engine.AHUD, UnrealEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          playerControllerClass:
+            _typeNameSerialized: UnrealEngine.Engine.APlayerController, UnrealEngine,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        _levelSettings:
+          levelName: NoGameModeScene
+          level: {fileID: 102900000, guid: ec03b9ca8dc4a48489e163e14bafa05d, type: 3}
+        gameInstanceClass:
+          _typeNameSerialized: UnrealEngine.Engine.UGameInstance, UnrealEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
