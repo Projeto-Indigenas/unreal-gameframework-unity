@@ -1,6 +1,6 @@
 {
-    "name": "UnrealAPIEditor",
-    "rootNamespace": "UnrealAPIEditor",
+    "name": "UnrealEditor",
+    "rootNamespace": "UnrealEditor",
     "references": [
         "GUID:64b5142ad895c9341874a21029319e67"
     ],

@@ -1,10 +1,10 @@
 {
-    "name": "UnrealAPITests",
-    "rootNamespace": "UnrealAPITests",
+    "name": "UnrealEngineTests",
+    "rootNamespace": "UnrealEngineTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UnrealAPI"
+        "UnrealEngine"
     ],
     "includePlatforms": [
         "Editor"

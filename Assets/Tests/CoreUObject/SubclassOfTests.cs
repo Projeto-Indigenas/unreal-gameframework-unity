@@ -2,7 +2,7 @@
 using UnrealEngine.CoreUObject;
 using UnrealEngine.Engine;
 
-namespace UnrealAPITests.CoreUObject
+namespace UnrealEngineTests.CoreUObject
 {
     public class TSubclassOfTests
     {
