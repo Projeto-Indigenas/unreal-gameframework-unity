@@ -1,8 +1,17 @@
-﻿namespace UnrealEngine.CoreUObject
+﻿using UnrealEngine.Core;
+
+namespace UnrealEngine.CoreUObject
 {
     public class UObject
     {
+        internal static readonly TMap<UClass, UObject> defaultObjects = default;
+
         private UObject _outer = default;
+
+        static UObject()
+        {
+            defaultObjects = new TMap<UClass, UObject>();
+        }
 
         public UObject GetOuter()
         {
@@ -31,6 +40,19 @@
             where TObject : UObject
         {
             return ((UClass)typeof(TObject)).NewObject<TObject>(outer);
+        }
+
+        public static TObject GetDefault<TObject>()
+            where TObject : UObject
+        {
+            if (!defaultObjects.TryGetValue(typeof(TObject), out UObject instance))
+            {
+                UELog.Log(FLogCategory.LogCore, ELogVerbosity.Error, $"No default object for type: {typeof(TObject)}");
+
+                return null;
+            }
+
+            return (TObject)instance;
         }
 
         internal void SetOuter(UObject outer)

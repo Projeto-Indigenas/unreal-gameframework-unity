@@ -18,11 +18,11 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: UGameModesSettings, ns: UnrealEngine.Settings, asm: UnrealAPI}
+      type: {class: UGameModesSettings, ns: UnrealEngine.Settings, asm: UnrealEngine}
       data:
         defaultGameModeClass:
-          _typeNameSerialized: UnrealEngine.Engine.AGameMode, UnrealAPI, Version=0.0.0.0,
+          _typeNameSerialized: UnrealEngine.Engine.AGameMode, UnrealEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         gameInstanceClass:
-          _typeNameSerialized: UnrealEngine.Engine.UGameInstance, UnrealAPI, Version=0.0.0.0,
+          _typeNameSerialized: UnrealEngine.Engine.UGameInstance, UnrealEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null

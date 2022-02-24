@@ -10,8 +10,6 @@ namespace UnrealEngine.Engine
     {
         public static readonly UEngine GEngine = default;
 
-        private UGameInstance _gameInstance = default;
-
         static UEngine()
         {
             GEngine = NewObject<UEngine>();
@@ -20,23 +18,9 @@ namespace UnrealEngine.Engine
             SceneManager.sceneUnloaded += SceneUnloaded;
         }
 
-        public UGameInstance GetGameInstance()
+        public virtual void Init()
         {
-            return _gameInstance;
-        }
-
-        private void Initialize(ProjectSettingsScriptableObject settingsScriptableObject)
-        {
-            UClass gameInstanceClass = StaticClass<UGameInstance>();
-            if (settingsScriptableObject.developerSettings.TryGetValue(StaticClass<UGameModesSettings>(), out UDeveloperSettings settings))
-            {
-                UGameModesSettings gameModeSettings = (UGameModesSettings)settings;
-
-                gameInstanceClass = gameModeSettings.gameInstanceClass;
-            }
-
-            _gameInstance = gameInstanceClass.NewObject<UGameInstance>(this);
-            _gameInstance.Init();
+            //
         }
 
         private static void SceneLoaded(Scene scene, LoadSceneMode mode)
@@ -56,7 +40,8 @@ namespace UnrealEngine.Engine
             private void Awake()
             {
                 DontDestroyOnLoad(gameObject);
-                GEngine.Initialize(settingsScriptableObject);
+
+                GEngine.Init();
             }
         }
     }

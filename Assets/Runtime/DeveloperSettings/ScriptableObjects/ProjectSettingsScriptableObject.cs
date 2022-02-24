@@ -26,7 +26,10 @@ namespace UnrealEngine.DeveloperSettings
                 if (!container) continue;
                 if (container.settings == null) continue;
 
-                developerSettings.Add(container.settings.GetClass(), container.settings);
+                UClass key = container.settings.GetClass();
+                developerSettings.Add(key, container.settings);
+
+                UObject.defaultObjects.Add(key, container.settings);
             }
         }
     }
