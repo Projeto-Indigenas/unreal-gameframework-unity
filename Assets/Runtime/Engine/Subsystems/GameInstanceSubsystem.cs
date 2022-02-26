@@ -1,10 +1,12 @@
-﻿namespace UnrealEngine.Engine
+﻿using UnrealEngine.CoreUObject;
+
+namespace UnrealEngine.Engine
 {
     public class UGameInstanceSubsystem : USubsystem
     {
         public UGameInstance GetGameInstance()
         {
-            return Cast<UGameInstance>(GetOuter());
+            return Cast<UObject, UGameInstance>(GetOuter());
         }
     }
 }

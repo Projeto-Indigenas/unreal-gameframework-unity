@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnrealEngine.Core;
+﻿using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
 using UnrealEngine.Settings;
 
@@ -22,6 +21,10 @@ namespace UnrealEngine.Engine
             UClass gameInstanceClass = settings.gameInstanceClass;
             _gameInstance = gameInstanceClass.NewObject<UGameInstance>(this);
             _gameInstance.Init();
+
+            UGameViewportClient viewportClient = NewObject<UGameViewportClient>(this, gameViewportClientClass.Get());
+            viewportClient.Init(_gameInstance);
+            gameViewport = viewportClient;
         }
 
         public override void Start()

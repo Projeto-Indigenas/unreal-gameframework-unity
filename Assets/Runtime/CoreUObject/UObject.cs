@@ -1,4 +1,5 @@
-﻿using UnrealEngine.Core;
+﻿using System;
+using UnrealEngine.Core;
 
 namespace UnrealEngine.CoreUObject
 {
@@ -28,18 +29,56 @@ namespace UnrealEngine.CoreUObject
             return typeof(TOwner);
         }
 
-        public static TClass Cast<TClass>(UObject obj)
-            where TClass : UObject
+        public static TTo Cast<TFrom, TTo>(TFrom obj)
+            where TFrom : class
+            where TTo : class
         {
-            if (obj is TClass instance) return instance;
+            if (obj is TTo instance)
+            {
+                return instance;
+            }
 
             return null;
+        }
+
+        public static TTo CastChecked<TFrom, TTo>(TFrom src)
+            where TFrom : class
+            where TTo : class
+        {
+            if (src == null)
+            {
+                CastLogError("nullptr", typeof(TTo).Name);
+
+                return null;
+            }
+
+            TTo to = Cast<TFrom, TTo>(src);
+            if (to == null)
+            {
+                CastLogError(src.GetType().Name, typeof(TTo).Name);
+
+                return null;
+            }
+
+            return to;
+        }
+
+        public static TObject NewObject<TObject>(UClass cls)
+            where TObject : UObject
+        {
+            return cls.NewObject<TObject>();
+        }
+
+        public static TObject NewObject<TObject>(UObject outer, UClass cls)
+            where TObject : UObject
+        {
+            return cls.NewObject<TObject>(outer);
         }
 
         public static TObject NewObject<TObject>(UObject outer = null)
             where TObject : UObject
         {
-            return ((UClass)typeof(TObject)).NewObject<TObject>(outer);
+            return NewObject<TObject>(outer, StaticClass<TObject>());
         }
 
         public static TObject GetDefault<TObject>()
@@ -63,6 +102,11 @@ namespace UnrealEngine.CoreUObject
         protected UObject() : base()
         {
             //
+        }
+
+        private static void CastLogError(FString fromType, FString toType)
+        {
+            UELog.Log(FLogCategory.LogCasts, ELogVerbosity.Error, $"Cast of {fromType} to {toType} failed");
         }
     }
 }

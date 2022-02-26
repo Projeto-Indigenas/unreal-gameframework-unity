@@ -122,9 +122,9 @@ namespace UnrealEngine.Engine
         }
 
         public TSubsystemClass GetSubsystem<TSubsystemClass>(TSubclassOf<TSubsystemClass> subsystemClass)
-            where TSubsystemClass : USubsystem
+            where TSubsystemClass : class
         {
-            return (TSubsystemClass)GetSubsystemInternal(subsystemClass.Get());
+            return UObject.Cast<USubsystem, TSubsystemClass>(GetSubsystemInternal(subsystemClass.Get()));
         }
     }
 }

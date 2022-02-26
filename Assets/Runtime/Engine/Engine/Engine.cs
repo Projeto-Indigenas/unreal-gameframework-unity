@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
@@ -10,6 +9,9 @@ namespace UnrealEngine.Engine
     public class UEngine : UObject
     {
         public static UEngine GEngine { get; internal set; }
+
+        public TSubclassOf<UGameViewportClient> gameViewportClientClass = StaticClass<UGameViewportClient>();
+        public UGameViewportClient gameViewport = default;
 
         static UEngine()
         {

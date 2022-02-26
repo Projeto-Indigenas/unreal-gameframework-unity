@@ -100,6 +100,7 @@ namespace UnrealEngine.Core
         public static readonly FLogCategory LogEngine = new FLogCategory(nameof(LogEngine));
         public static readonly FLogCategory LogLoad = new FLogCategory(nameof(LogLoad));
         public static readonly FLogCategory LogInit = new FLogCategory(nameof(LogInit));
+        public static readonly FLogCategory LogCasts = new FLogCategory(nameof(LogCasts));
 
         protected FLogCategory(string name) => _name = name;
 
