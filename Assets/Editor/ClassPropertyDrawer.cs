@@ -22,7 +22,7 @@ namespace UnrealEditor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (_allTypes == null || _allTypes.Count == 0)
+            if (_allTypes == null || _allTypes.Num() == 0)
             {
                 FieldInfo info = property.GetFieldInfo(out object targetObject);
                 TSubclassOfAttribute attribute = info.GetCustomAttribute<TSubclassOfAttribute>();

@@ -31,8 +31,8 @@ namespace UnrealEngine.Engine
         {
             _outer = newOuter;
 
-            _subsystemsToInitialize = _allSubsystemTypes.FilterBy(each => each.IsSubclassOf(_baseTypeClass.Get()));
-            for (int index = _subsystemsToInitialize.Count - 1; index >= 0;)
+            _subsystemsToInitialize = _allSubsystemTypes.FilterByPredicate(each => each.IsSubclassOf(_baseTypeClass.Get()));
+            for (int index = _subsystemsToInitialize.Num() - 1; index >= 0;)
             {
                 UClass cls = _subsystemsToInitialize[index];
                 _searchingSubsystemClass = cls;

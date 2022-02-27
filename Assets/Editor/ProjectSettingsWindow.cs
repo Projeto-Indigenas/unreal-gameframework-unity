@@ -113,7 +113,7 @@ namespace UnrealEditor
 
             EditorBuildSettingsScene settingsScene = new EditorBuildSettingsScene(_initializationScenePath, true);
             TArray<EditorBuildSettingsScene> scenes = new TArray<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
-            int indexOfScene = scenes.FindIndex(each => each.guid == settingsScene.guid);
+            int indexOfScene = scenes.IndexByPredicate(each => each.guid == settingsScene.guid);
             if (indexOfScene != 0)
             {
                 if (indexOfScene == -1)
@@ -288,7 +288,7 @@ namespace UnrealEditor
                 UpdateNavigator(container);
             }
 
-            _projectSettings.containers = allSettings.ToArray();
+            _projectSettings.containers = allSettings;
 
             EditorUtility.SetDirty(_projectSettings);
         }

@@ -3,7 +3,7 @@ using UnrealEngine.Core;
 
 namespace UnrealEngine.CoreUObject
 {
-    public class UObject
+    public class UObject : UObjectBase
     {
         internal static readonly TMap<UClass, UObject> defaultObjects = default;
 
@@ -86,7 +86,7 @@ namespace UnrealEngine.CoreUObject
         {
             if (!defaultObjects.TryGetValue(typeof(TObject), out UObject instance))
             {
-                UELog.Log(FLogCategory.LogCore, ELogVerbosity.Error, $"No default object for type: {typeof(TObject)}");
+                UE.Log(FLogCategory.LogCore, ELogVerbosity.Error, $"No default object for type: {typeof(TObject)}");
 
                 return null;
             }
@@ -94,9 +94,14 @@ namespace UnrealEngine.CoreUObject
             return (TObject)instance;
         }
 
-        internal void SetOuter(UObject outer)
+        public void SetOuter(UObject outer)
         {
             _outer = outer;
+        }
+
+        public static implicit operator bool(UObject obj)
+        {
+            return obj != null;
         }
 
         protected UObject() : base()
@@ -106,7 +111,7 @@ namespace UnrealEngine.CoreUObject
 
         private static void CastLogError(FString fromType, FString toType)
         {
-            UELog.Log(FLogCategory.LogCasts, ELogVerbosity.Error, $"Cast of {fromType} to {toType} failed");
+            UE.Log(FLogCategory.LogCasts, ELogVerbosity.Error, $"Cast of {fromType} to {toType} failed");
         }
     }
 }

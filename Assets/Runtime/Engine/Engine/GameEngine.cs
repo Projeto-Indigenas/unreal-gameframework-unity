@@ -25,11 +25,13 @@ namespace UnrealEngine.Engine
             UGameViewportClient viewportClient = NewObject<UGameViewportClient>(this, gameViewportClientClass.Get());
             viewportClient.Init(_gameInstance);
             gameViewport = viewportClient;
+
+            ULocalPlayer localPlayer = viewportClient.SetupInitialLocalPlayer(out FString error);
         }
 
         public override void Start()
         {
-            UELog.Log(FLogCategory.LogInit, ELogVerbosity.Display, "Starting Game.");
+            UE.Log(FLogCategory.LogInit, ELogVerbosity.Display, "Starting Game.");
 
             _gameInstance.StartGameInstance();
         }

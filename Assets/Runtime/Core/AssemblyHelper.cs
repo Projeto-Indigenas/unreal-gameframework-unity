@@ -24,9 +24,15 @@ namespace UnrealEngine.Core
                 Type[] arrayOfTypes = assembly.GetTypes();
                 if (arrayOfTypes == null) continue;
                 TArray<Type> allTypes = new TArray<Type>(arrayOfTypes);
-                TArray<Type> filtered = allTypes.FilterBy(each => (includingSelf && each == type) || (each?.IsSubclassOf(type) ?? false));
-                if (filtered == null || filtered.Count == 0) continue;
-                allOfType.AddRange(filtered);
+                
+                TArray<Type> filtered = allTypes.FilterByPredicate(each =>
+                {
+                    return (includingSelf && each == type) || (each?.IsSubclassOf(type) ?? false);
+                });
+                
+                if (!filtered.IsValid() || filtered.Num() == 0) continue;
+                
+                allOfType.Append(filtered);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace UnrealEngine.CoreUObject
         public TSubclassOfAttribute(Type type, bool includeSelf)
         {
             this.type = type;
-            this.includingSelf = includeSelf;
+            includingSelf = includeSelf;
         }
     }
 
@@ -25,9 +25,9 @@ namespace UnrealEngine.CoreUObject
             return _class;
         }
 
-        private TSubclassOf(UClass cls)
+        public bool IsValid()
         {
-            _class = cls;
+            return _class.IsValid();
         }
 
         public static implicit operator TSubclassOf<TClass>(UClass cls)
@@ -37,11 +37,21 @@ namespace UnrealEngine.CoreUObject
             return new TSubclassOf<TClass>(cls);
         }
 
+        public static implicit operator UClass(TSubclassOf<TClass> cls)
+        {
+            return cls._class;
+        }
+
         internal static void ThrowIfNotSubclassOf<TBaseType>(UClass inherited)
         {
             if (inherited.IsSubclassOf(typeof(TBaseType))) return;
 
             throw new NotSubclassOfException(typeof(TBaseType), inherited);
+        }
+
+        private TSubclassOf(UClass cls)
+        {
+            _class = cls;
         }
     }
 

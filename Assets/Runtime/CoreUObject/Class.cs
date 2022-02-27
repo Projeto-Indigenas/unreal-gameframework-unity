@@ -26,7 +26,12 @@ namespace UnrealEngine.CoreUObject
             return _typeRef.IsSubclassOf(type);
         }
 
-        internal TClass NewObject<TClass>(UObject outer = null)
+        public bool IsValid()
+        {
+            return _typeRef != null;
+        }
+
+        public TClass NewObject<TClass>(UObject outer = null)
             where TClass : UObject
         {
             TClass instance = (TClass)Activator.CreateInstance(this, true);

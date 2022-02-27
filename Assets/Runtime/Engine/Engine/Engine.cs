@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
@@ -10,8 +11,12 @@ namespace UnrealEngine.Engine
     {
         public static UEngine GEngine { get; internal set; }
 
+        private UWorld _currentWorld = default;
+
         public TSubclassOf<UGameViewportClient> gameViewportClientClass = StaticClass<UGameViewportClient>();
         public UGameViewportClient gameViewport = default;
+
+        public TSubclassOf<ULocalPlayer> localPlayerClass = StaticClass<UGameViewportClient>();
 
         static UEngine()
         {
@@ -51,6 +56,24 @@ namespace UnrealEngine.Engine
             return EBrowseReturn.Success;
         }
 
+        public void SwapControllerId(ULocalPlayer newPlayer, int currentControllerId, int newControllerId)
+        {
+            TArray<ULocalPlayer> localPlayers = _currentWorld.owningGameInstance.GetLocalPlayers();
+
+            if (!localPlayers.Contains(newPlayer)) return;
+
+            foreach (ULocalPlayer localPlayer in _currentWorld.owningGameInstance.GetLocalPlayerIterator())
+            {
+                for (int index = 0; index < localPlayers.Num(); index++)
+                {
+                    if (localPlayer && localPlayer != newPlayer && localPlayer.GetControllerId() == newControllerId)
+                    {
+                        localPlayer.SetControllerId(currentControllerId);
+                    }
+                }
+            }
+        }
+
         private bool LoadMap(FString url, out FString error)
         {
             LoadSceneParameters parameters = new LoadSceneParameters
@@ -71,7 +94,7 @@ namespace UnrealEngine.Engine
 
         private void HandleBrowseToDefaultMapFailure(FString url, FString error)
         {
-            UELog.Log(FLogCategory.LogEngine, ELogVerbosity.Error, $"Failed to load default map ({url}). Error: ({error})");
+            UE.Log(FLogCategory.LogEngine, ELogVerbosity.Error, $"Failed to load default map ({url}). Error: ({error})");
 
             CreateSceneParameters parameters = new CreateSceneParameters
             {

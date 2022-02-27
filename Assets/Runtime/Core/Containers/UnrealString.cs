@@ -10,6 +10,11 @@ namespace UnrealEngine.Core
 
         public bool IsEmpty() => string.IsNullOrEmpty(_string);
 
+        public int Len()
+        {
+            return _string.Length;
+        }
+
         public static implicit operator FString(string value) => new FString(value);
         public static implicit operator string(FString value) => value._string;
 

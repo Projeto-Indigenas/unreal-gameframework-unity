@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
+using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
 
 namespace UnrealEngine.Engine
 {
+    using FOnControllerIdChanged = FDeclareEvent<int, int>;
+
     public class ULocalPlayer : UPlayer
     {
         private FSubsystemCollection<ULocalPlayerSubsystem> _subsystemCollection = default;
+
         private int _controllerId = default;
+
+        private FOnControllerIdChanged _onControllerIdChangedEvent = default;
 
         public UGameViewportClient viewportClient = default;
 
@@ -51,7 +57,25 @@ namespace UnrealEngine.Engine
 
         public virtual void SetControllerId(int newControllerId)
         {
-            _controllerId = newControllerId;
+            if (_controllerId != newControllerId)
+            {
+                FString message = FString.Printf("%s changing ControllerId from %i to %i", GetFName().ToString(), _controllerId, newControllerId);
+                UE.Log(FLogCategory.LogPlayerManagement, ELogVerbosity.Log, message);
+
+                int currentControllerId = _controllerId;
+
+                _controllerId = -1;
+
+                UEngine.GEngine.SwapControllerId(this, currentControllerId, newControllerId);
+                _controllerId = newControllerId;
+
+                OnControllerIdChanged().Broadcast(newControllerId, currentControllerId);
+            }
+        }
+
+        private FOnControllerIdChanged OnControllerIdChanged()
+        {
+            return _onControllerIdChangedEvent;
         }
 
         public int GetControllerId()
@@ -62,6 +86,19 @@ namespace UnrealEngine.Engine
         public bool IsPrimaryPlayer()
         {
             return _controllerId == 0;
+        }
+
+        public void PlayerAdded(UGameViewportClient viewportClient, int controllerId)
+        {
+            this.viewportClient = viewportClient;
+            SetControllerId(controllerId);
+
+            _subsystemCollection.Initialize(this);
+        }
+
+        public FString GetName()
+        {
+            return GetFName().ToString();
         }
 
         protected ULocalPlayer()

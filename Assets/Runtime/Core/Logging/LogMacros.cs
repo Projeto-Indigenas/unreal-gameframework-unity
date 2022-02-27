@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnrealEngine.Core
 {
-    public static class UELog
+    public static class UE
     {
         public static void Log(FLogCategory category, ELogVerbosity verbosity, FString message)
         {
@@ -101,6 +101,7 @@ namespace UnrealEngine.Core
         public static readonly FLogCategory LogLoad = new FLogCategory(nameof(LogLoad));
         public static readonly FLogCategory LogInit = new FLogCategory(nameof(LogInit));
         public static readonly FLogCategory LogCasts = new FLogCategory(nameof(LogCasts));
+        public static readonly FLogCategory LogPlayerManagement = new FLogCategory(nameof(LogPlayerManagement));
 
         protected FLogCategory(string name) => _name = name;
 
