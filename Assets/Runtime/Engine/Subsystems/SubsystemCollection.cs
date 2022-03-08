@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
 
@@ -36,7 +35,7 @@ namespace UnrealEngine.Engine
             {
                 UClass cls = _subsystemsToInitialize[index];
                 _searchingSubsystemClass = cls;
-                if (_subsystems.Find(_searchSubsystemPredicate) != null)
+                if (_subsystems.FindByPredicate(_searchSubsystemPredicate) != null)
                 {
                     _subsystemsToInitialize.RemoveAt(index);
 
@@ -51,9 +50,9 @@ namespace UnrealEngine.Engine
                 
                 instance.Initialize(this);
 
-                index = _subsystemsToInitialize.Count - 1;
+                index = _subsystemsToInitialize.Num() - 1;
             }
-            _subsystemsToInitialize = null;
+            _subsystemsToInitialize.Empty();
 
             _searchingSubsystemClass = null;
         }
@@ -107,7 +106,7 @@ namespace UnrealEngine.Engine
         private static USubsystem SearchForSubsystem(TArray<USubsystem> subsystems, UClass cls)
         {
             _searchingSubsystemClass = cls;
-            USubsystem found = subsystems.Find(_searchSubsystemPredicate);
+            USubsystem found = subsystems.FindByPredicate(_searchSubsystemPredicate);
             _searchingSubsystemClass = null;
             return found;
         }

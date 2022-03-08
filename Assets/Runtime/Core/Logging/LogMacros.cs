@@ -95,13 +95,13 @@ namespace UnrealEngine.Core
     public partial class FLogCategory
     {
         private string _name = default;
-
         public static readonly FLogCategory LogCore = new FLogCategory(nameof(LogCore));
         public static readonly FLogCategory LogEngine = new FLogCategory(nameof(LogEngine));
         public static readonly FLogCategory LogLoad = new FLogCategory(nameof(LogLoad));
         public static readonly FLogCategory LogInit = new FLogCategory(nameof(LogInit));
         public static readonly FLogCategory LogCasts = new FLogCategory(nameof(LogCasts));
         public static readonly FLogCategory LogPlayerManagement = new FLogCategory(nameof(LogPlayerManagement));
+        public static readonly FLogCategory LogSpawn = new FLogCategory(nameof(LogSpawn));
 
         protected FLogCategory(string name) => _name = name;
 

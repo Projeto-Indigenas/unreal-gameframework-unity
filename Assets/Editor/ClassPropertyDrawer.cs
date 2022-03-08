@@ -22,17 +22,17 @@ namespace UnrealEditor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (_allTypes == null || _allTypes.Num() == 0)
+            if (_allTypes.Num() == 0)
             {
                 FieldInfo info = property.GetFieldInfo(out object targetObject);
                 TSubclassOfAttribute attribute = info.GetCustomAttribute<TSubclassOfAttribute>();
                 AssemblyHelper.FindAll(attribute?.type ?? typeof(UObject), out _allTypes, attribute?.includingSelf ?? false);
 
                 UClass value = (UClass)info.GetValue(targetObject);
-                _selectedIndex = _allTypes.IndexOf(value);
+                _selectedIndex = _allTypes.Find(value);
                 if (_selectedIndex == -1) _selectedIndex = default;
 
-                _allNames = Array.ConvertAll(_allTypes.ToArray(), each => each.FullName);
+                _allNames = _allTypes.ConvertAll(each => each.FullName);
             }
 
             EditorGUI.BeginChangeCheck();

@@ -118,7 +118,7 @@ namespace UnrealEditor
             {
                 if (indexOfScene == -1)
                 {
-                    scenes.Insert(0, settingsScene);
+                    scenes.Insert(settingsScene, 0);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace UnrealEditor
                             EditorGUILayout.Space(10F, false);
                             if (GUILayout.Button(pair.Key, EditorStyles.linkLabel))
                             {
-                                SelectSettings(pair.Value.developerSettings.ToArray());
+                                SelectSettings(pair.Value.developerSettings);
                             }
                         }
                         EditorGUILayout.EndHorizontal();
@@ -250,10 +250,10 @@ namespace UnrealEditor
             TArray<DeveloperSettingsContainerScriptableObject> allSettings = new TArray<DeveloperSettingsContainerScriptableObject>();
             if (_projectSettings.containers != null)
             {
-                allSettings.AddRange(_projectSettings.containers);
+                allSettings.Append(_projectSettings.containers);
             }
 
-            for (int index = allSettings.Count - 1; index >= 0; index--)
+            for (int index = allSettings.Num() - 1; index >= 0; index--)
             {
                 DeveloperSettingsContainerScriptableObject container = allSettings[index];
 
@@ -274,7 +274,7 @@ namespace UnrealEditor
             }
 
 
-            for (int index = 0; index < typesToAdd.Count; index++)
+            for (int index = 0; index < typesToAdd.Num(); index++)
             {
                 UClass cls = typesToAdd[index];
 

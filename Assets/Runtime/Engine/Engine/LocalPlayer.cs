@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnrealEngine.Core;
 using UnrealEngine.CoreUObject;
 
@@ -99,6 +100,14 @@ namespace UnrealEngine.Engine
         public FString GetName()
         {
             return GetFName().ToString();
+        }
+
+        public void SendSplitJoin()
+        {
+            // Unreal sends the request through net driver.
+            // We'll be using single player mode only.
+            // So we just skip right to world.
+            GetWorld().JoinSplitImplementation(this);
         }
 
         protected ULocalPlayer()
